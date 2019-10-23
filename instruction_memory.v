@@ -7,6 +7,7 @@ module instruction_memory
 	//
 	//	Input
 	//
+	clk,
 	address,
 	
 	//
@@ -20,6 +21,8 @@ module instruction_memory
     output 	[31:0] 	instruction;
 	
 	// Call Intstruction Fetch module
+	
+	blk_mem_gen_v7_3 mem(.clka(clk), .wea(0), .addra(addr), .dina(0), .douta(instruction));
 		
     
  endmodule  
