@@ -11,10 +11,10 @@ module control_unit
 	reg_file_rmux_select,
 	alu_mux_select,
 	alu_control,
-	alu_z,
-	alu_carry,
-	alu_sign,
-	alu_overflow,
+	zflag,
+	carryflag,
+	signflag,
+	overflowflag,
 	alu_shamt,
 	pc_control
 );
@@ -173,31 +173,18 @@ module control_unit
 		//---------------------------
 		// output [3:0]	pc_control;
 		//---------------------------
-		#0.5 
-		if (op == B) begin
+		 
+		if (op == R && funct == BR) begin
 			pc_control = 4'b0001;
-		end else if (op == R && funct == BR) begin
+		end else if (op == B
+					|| op == CALL
+					|| op == BZ && zflag == 0 || op == BNZ && zflag == 1 
+					|| op == BCY && carryflag == 0 || op == BNCY && carryflag != 1
+					|| op == BS && signflag == 0 || op == BNS && signflag != 1
+					|| op == BV && overflowflag == 0 || op == BNV && overflowflag != 1) begin
 			pc_control = 4'b0010;
-		end else if (op == BZ && zflag == 0) begin
-			pc_control = 4'b0011;
-		end else if (op == BNZ && zflag == 1) begin
-			pc_control = 4'b0100;
-		end else if (op == BCY && carryflag == 0) begin
-			pc_control = 4'b0101;
-		end else if (op == BNCY && carryflag != 1) begin
-			pc_control = 4'b0110;
-		end else if (op == BS && signflag == 0) begin
-			pc_control = 4'b0111;
-		end else if (op == BNS && signflag != 1) begin
-			pc_control = 4'b1000;
-		end else if (op == BV && overflowflag == 0) begin
-			pc_control = 4'b1001;
-		end else if (op == BNV && overflowflag != 1) begin
-			pc_control = 4'b1010;
-		end else if (op == CALL) begin
-			pc_control = 4'b1011;
 		end else if (op == RET) begin
-			pc_control = 4'b1100;
+			pc_control = 4'b0011;
 		end else begin
 			// PC = PC+4
 			pc_control = 4'b0000;

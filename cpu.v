@@ -86,6 +86,7 @@ module cpu
 							.jump_address(instruction[25:0]),
 							.branch_offset(instruction[15:0]),
 							.reg_address(rdata0),
+							.curr_address(wdata),
 							.pc(pc));
 
 	instruction_memory inst_mem (.address(pc),

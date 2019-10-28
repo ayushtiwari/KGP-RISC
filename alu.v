@@ -10,10 +10,10 @@ module alu
     // Output Ports
     //--------------------------
     output		[31:0]	result,
-	output	reg			zflag,
-	output	reg			carryflag,
-	output	reg			signflag,
-	output 	reg			overflowflag
+	output				zflag,
+	output				carryflag,
+	output				signflag,
+	output 				overflowflag
 );
     
 
@@ -21,6 +21,7 @@ module alu
 	
 	assign zero 	= (result == 0) ? 1'b1 : 1'b0;
 	assign overflow = (operand0[31] == operand1[31]) && (result[31] != operand0[31]);
+	assign signflag = result[31];
     
 	function [31:0] alu_function;
 		input [3:0] control;
@@ -49,10 +50,6 @@ module alu
 			endcase
 		end
 	endfunction
-	
-	always @(result) begin
-		
-	end
          
 endmodule
 
