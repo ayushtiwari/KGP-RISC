@@ -22,7 +22,6 @@ module mux_2to1
 	input [DWIDTH-1:0] in1;
 	input sel;
 	
-	
     output 	[DWIDTH-1:0] 		out; 
 		
 	assign out = (sel == 0) ? in0 : in1;

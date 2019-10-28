@@ -22,7 +22,7 @@ module instruction_memory
 	
 	// Call Intstruction Fetch module
 	
-	blk_mem_gen_v7_3 mem(.clka(clk), .wea(0), .addra(addr), .dina(0), .douta(instruction));
+	blk_mem_gen_v7_3 mem(.clka(clk), .wea(0), .addra(address), .dina(0), .douta(instruction));
 		
     
  endmodule  

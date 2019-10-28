@@ -1,25 +1,3 @@
-`timescale 1ns / 1ps
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Engineer: Marc Khouri	
-//
-// Create Date:	4/26/14	
-// Design Name: CPU	
-// Module Name: CPU    
-// Project Name:	
-// Target Devices: 
-// Tool versions:
-// Description:	Connects all modules that make up the CPU	
-//
-// Dependencies:
-//
-// Revision:
-//
-//
-// Additional Comments:
-// Instantiate all the necessary components in this file. Connect them as appropriate using wires.  Use the figure
-// provided in the specification as a guide.
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 module cpu
 (
 	clk,
@@ -89,12 +67,10 @@ module cpu
 	//----------------------
 	//	Registers for branching logic
 	//----------------------
-	reg z_flag;
-	reg carry_flag;
-	reg sign_flag;
-	reg overflow_flag;
-	
-	wire alu_zero;
+	reg alu_flag_z;
+	reg alu_flag_carry;
+	reg alu_flag_sign;
+	reg alu_flag_overflow;
 
 	wire [31:0] datamemory_rdata;
 
@@ -123,7 +99,10 @@ module cpu
 							.reg_file_rmux_select(reg_file_rmux_select),
 							.alu_mux_select(alu_mux_select),
 							.alu_control(alu_control),
-							.alu_zero(alu_zero),
+							.alu_z(alu_flag_z),
+							.alu_carry(alu_flag_carry),
+							.alu_sign(alu_flag_sign),
+							.alu_overflow(alu_flag_overflow),
 							.alu_shamt(shamt),
 							.pc_control(pc_control));
 
@@ -153,9 +132,10 @@ module cpu
 							  .operand0(rdata0),
 							  .operand1(alu_operand1),
 							  .result(alu_result),
-							  .overflow(alu_flag_overflow),
-							  .zero(alu_flag_zero),
-							  .shamt(shamt));
+							  .overflowflag(alu_flag_overflow),
+							  .zflag(alu_flag_z),
+							  .carryflag(alu_flag_carry),
+							  .signflag(alu_sign_flag));
 
 	data_memory dataMemory (.clk(clk),
 							.addr(alu_result),

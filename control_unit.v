@@ -11,7 +11,10 @@ module control_unit
 	reg_file_rmux_select,
 	alu_mux_select,
 	alu_control,
-	alu_zero,
+	alu_z,
+	alu_carry,
+	alu_sign,
+	alu_overflow,
 	alu_shamt,
 	pc_control
 );
